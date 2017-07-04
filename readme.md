@@ -4,9 +4,9 @@ The main purpose was to learn some Spring/Spring Boot features (MVC, Spring Data
 
 ## Running the app
 
-As a jar file:
+As a jar file (you can download it from the release tab above):
 
-`java -jar target/jetshop-0.0.1-SNAPSHOT.jar`
+`java -jar jetshop-0.1.0.jar`
 
 
 Using Maven:
