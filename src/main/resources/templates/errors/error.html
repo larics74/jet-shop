@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="common/layout">
+<!-- 
+	Running from jar requires NO leading slash in "common/layout"!!!
+	IDE doesn't care.
+ -->
+
+<head>
+	<title th:text="#{title.error}">*Error</title>
+</head>
+<body>
+
+	<h1 layout:fragment="header" th:text="#{title.error}">*Ooops...</h1>
+
+	<section layout:fragment="content"></section>
+
+</body>
+</html>

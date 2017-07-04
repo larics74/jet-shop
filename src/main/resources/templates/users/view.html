@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="common/layout">
+<!-- 
+	Running from jar requires NO leading slash in "common/layout"!!!
+	IDE doesn't care.
+ -->
+
+<head>
+	<title th:text="#{title.user.details}">*User Details</title>
+</head>
+<body>
+
+	<h1 layout:fragment="header" th:text="#{title.user.details}">
+		*User Details
+	</h1>
+
+	<section layout:fragment="content" class="data">
+
+		<label th:text="#{username}">*Username</label>
+		<span th:text="${user.name}">*Delta</span>
+
+		<label th:text="#{role}">*Role</label>
+		<span th:text="${user.role}">*Super role</span>
+
+		<section class="controls lower-controls">
+			<a th:href="@{/users/edit/{id}(id=${user.id})}" th:text="#{edit}">
+				*Edit
+			</a>
+		</section>
+
+	</section>
+
+</body>
+</html>

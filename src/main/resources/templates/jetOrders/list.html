@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="common/layout">
+<!-- 
+	Running from jar requires NO leading slash in "common/layout"!!!
+	IDE doesn't care.
+ -->
+
+<head> 
+	<title th:text="#{title.jetOrders}">*Jet Orders</title>
+</head>
+<body>
+
+	<h1 layout:fragment="header" th:text="#{title.jetOrders}">
+		*Jet Orders
+	</h1>
+
+	<section layout:fragment="content" class="data">
+
+		<table>
+			<thead>
+				<tr>
+					<th th:text="#{lineNumber}">*Line Number</th>
+					<th th:text="#{customer}">*Customer</th>
+					<th th:text="#{jetModel}">*Jet Model</th>
+					<th th:text="#{deliveryDate}">*Delivery Date</th>
+					<td></td>
+					<td class="controls">
+						<a th:href="@{/jetOrders/create}" th:text="#{create}">
+							*Create
+						</a>
+					</td>
+					<td></td>
+				</tr>
+			</thead>
+
+			<tfoot>
+				<tr>
+					<th colspan="4"></th>
+				</tr>
+			</tfoot>
+
+			<tbody>
+
+<tr th:each="jetOrder : ${jetOrders}">
+	<td th:text="${jetOrder.lineNumber}">*001</td>
+	<td>
+		<a th:href="@{/users/{id}(id=${jetOrder.customer.id})}">
+			<span th:text="${jetOrder.customer.name}">*Unknown Customer</span>
+		</a>
+	</td>
+	<td>
+		<a th:href="@{/jetModels/{id}(id=${jetOrder.jetModel.id})}">
+			<span th:text="${jetOrder.jetModel.name}">*797</span>
+		</a>
+	</td>
+	<td th:text="${#temporals.format(jetOrder.deliveryDate, 'MM/dd/yyyy')}">
+		*1/1/2150
+	</td>
+
+	<td class="controls">
+		<a th:href="@{/jetOrders/{id}(id=${jetOrder.id})}"
+			th:text="#{view}">
+			*View
+		</a>
+	</td>
+	<td class="controls">
+		<a th:href="@{/jetOrders/edit/{id}(id=${jetOrder.id})}"
+			th:text="#{edit}">
+			*Edit
+		</a>
+	</td>
+	<td class="controls caution">
+		<a th:href="@{/jetOrders/delete/{id}(id=${jetOrder.id})}"
+			th:text="#{delete}"
+			sec:authorize="hasAuthority('ADMIN')">
+			*Delete
+		</a>
+	</td>
+</tr>
+
+			</tbody>
+		</table>
+	</section>
+
+</body>
+</html>

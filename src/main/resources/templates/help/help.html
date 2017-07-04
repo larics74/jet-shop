@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="common/layout">
+<!-- 
+	Running from jar requires NO leading slash in "common/layout"!!!
+	IDE doesn't care.
+ -->
+
+<head>
+	<title th:text="#{title.help}">*Help</title> 
+</head>
+<body>
+	
+	<h3 layout:fragment="header" th:text="#{help.about}">*Header</h3>
+
+	<div layout:fragment="content">
+
+		<ol>
+			<li th:utext="${#strings.replace(
+							#strings.escapeXml( #messages.msg('help.content.1') 
+						), '&#10;','&lt;br /&gt;')}" >
+			</li>
+			<li>
+				<p th:utext="${#strings.replace(
+						#strings.escapeXml( #messages.msg('help.content.21') 
+					), '&#10;','&lt;br /&gt;')}" >
+				</p>
+				<ul
+					th:each="line : ${#strings.arraySplit(
+							#strings.escapeXml( #messages.msg('help.content.22') 
+						), '&#10;')}">
+					<li th:text="${line}"></li>
+				</ul>
+				<br/>
+			</li>
+			<li>
+				<p th:text="#{help.content.31}"></p>
+				<table>
+					<tr>
+						<th th:text="#{username}">*Username</th>
+						<th th:text="#{password}">"*Password</th>
+						<th th:text="#{role}">*Role</th>
+						<th th:text="#{note}">*Note</th>
+					</tr>
+					<tr>
+						<td>admin</td>
+						<td>admin</td>
+						<td>ADMIN</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>user</td>
+						<td>user</td>
+						<td>CUSTOMER</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>sched</td>
+						<td>sched</td>
+						<td>SCHEDULER</td>
+						<td th:text="#{help.content.32}"></td>
+					</tr>
+					<tr>
+						<td>Delta</td>
+						<td>user</td>
+						<td>CUSTOMER</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Alaska Airlines</td>
+						<td>user</td>
+						<td>CUSTOMER</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Lufthansa</td>
+						<td>user</td>
+						<td>CUSTOMER</td>
+						<td></td>
+					</tr>
+				</table>
+			</li>
+		</ol>
+
+	</div>
+
+</body>
+</html>

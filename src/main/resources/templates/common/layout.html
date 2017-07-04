@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<title>-Main Layout</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" th:href="@{/css/jetShop.css}" />
+</head>
+
+<body>
+	<div>
+		<header>
+			<a th:href="@{/}" id="logo">
+				<img th:src="@{/images/logo.jpg}" width="100" />
+			</a>
+			<nav class="controls menu-controls">
+				<a th:href="@{/}" th:text="#{menu.home}">
+					*Home
+				</a>
+				<a th:href="@{/jetModels}" th:text="#{menu.jetModels}">
+					*Jet Models
+				</a>
+				<a th:href="@{/jetOrders}" th:text="#{menu.jetOrders}">
+					*Orders
+				</a>
+				<!-- hasRole() doesn't work here -->
+				<a th:href="@{/users}" th:text="#{menu.users}"
+					sec:authorize="hasAuthority('ADMIN')">
+					*Users
+				</a>
+				<a th:href="@{/factory}" th:text="#{menu.factory}">
+					*Factory
+				</a>
+			</nav>
+			<div id="settings" class="controls menu-controls">
+				<a href="?lang=en">En</a>
+				<a href="?lang=ru">Ру</a>
+			</div>
+			<div id="misc" class="controls menu-controls">
+				<a th:href="@{/design}" th:text="#{menu.design}"
+					sec:authorize="hasAuthority('ADMIN')">
+					*Design
+				</a>
+				<a th:href="@{/help}" th:text="#{menu.help}">
+					*Help
+				</a>
+			</div>
+			<div id="profile" class="controls menu-controls">
+				<div>
+					<a th:href="@{/login}" th:text="#{menu.log.in}"
+						sec:authorize="isAnonymous()">
+						*Log in
+					</a>
+					<a th:href="@{/register}" th:text="#{menu.register}"
+						sec:authorize="isAnonymous()"> 
+						*Register
+					</a>
+					<a th:if="${#httpSession != null and #httpSession.getAttribute('currentUserId') != null}"
+						th:href="@{/users/{id}(id=${#httpSession.getAttribute('currentUserId')})}"
+						th:text="#{menu.profile}"
+						sec:authorize="isAuthenticated()">
+						*Profile
+					</a>
+					<form th:action="@{/logout}" method="post"
+						sec:authorize="isAuthenticated()">
+						<button type="submit" th:text="#{menu.log.out}">
+							*Log out
+						</button>
+					</form>
+				</div>
+				<p
+					sec:authorize="isAuthenticated()">
+					<span th:text="#{menu.welcome( ${#authentication.name} )}">*Welcome, User!</span>
+				</p>
+			</div>
+		</header>
+
+		<main>
+			<h1 layout:fragment="header">-Header</h1>
+
+			<section th:if="${messages != null}" class="messages">
+				<div th:each="message,rowStat : *{messages.errorMessages}"
+					class="error">
+					<span th:text="${message}">-Error message</span>
+				</div>
+				<div th:each="message,rowStat : *{messages.infoMessages}"
+					class="info">
+					<span th:text="${message}">-Info message</span>
+				</div>
+				<div th:each="message,rowStat : *{messages.debugMessages}"
+					class="debug">
+					<span th:text="${message}">-Debug message</span>
+				</div>
+			</section>
+
+			<!-- 
+			How to restrict content:
+
+			<div sec:authorize="isAuthenticated()">
+			  This content is only shown to authenticated users.
+			
+			Logged user: <span sec:authentication="name">Bob</span>
+			Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
+			
+			</div>
+			<div sec:authorize="hasAuthority('ADMIN')">
+			  This content is only shown to ADMIN.
+			</div>
+			 -->
+
+			<section layout:fragment="content">-Content</section>
+
+			<!-- 
+				The following sections are provided for design page ONLY.
+			 -->
+			<div th:if="${design}" class="hr">&nbsp;</div>
+			<h1 th:if="${design}"
+				layout:fragment="header1"></h1>
+			<section th:if="${design}"
+				layout:fragment="content1"></section>
+			<div th:if="${design}" class="hr">&nbsp;</div>
+			<h1 th:if="${design}"
+				layout:fragment="header2"></h1>
+			<section th:if="${design}"
+				layout:fragment="content2"></section>
+			<div th:if="${design}" class="hr">&nbsp;</div>
+			<h1 th:if="${design}"
+				layout:fragment="header3"></h1>
+			<section th:if="${design}"
+				layout:fragment="content3"></section>
+			<div th:if="${design}" class="hr">&nbsp;</div>
+			<h1 th:if="${design}"
+				layout:fragment="header4"></h1>
+			<section th:if="${design}"
+				layout:fragment="content4"></section>
+			<div th:if="${design}" class="hr">&nbsp;</div>
+			<h1 th:if="${design}"
+				layout:fragment="header5"></h1>
+			<section th:if="${design}"
+				layout:fragment="content5"></section>
+			<div th:if="${design}" class="hr">&nbsp;</div>
+			<h1 th:if="${design}"
+				layout:fragment="header6"></h1>
+			<section th:if="${design}"
+				layout:fragment="content6"></section>
+			<div th:if="${design}" class="hr">&nbsp;</div>
+			<h1 th:if="${design}"
+				layout:fragment="header7"></h1>
+			<section th:if="${design}"
+				layout:fragment="content7"></section>
+			<div th:if="${design}" class="hr">&nbsp;</div>
+			<h1 th:if="${design}"
+				layout:fragment="header8"></h1>
+			<section th:if="${design}"
+				layout:fragment="content8"></section>
+			<div th:if="${design}" class="hr">&nbsp;</div>
+			<h1 th:if="${design}"
+				layout:fragment="header9"></h1>
+			<section th:if="${design}"
+				layout:fragment="content9"></section>
+			<div th:if="${design}" class="hr">&nbsp;</div>
+			<h1 th:if="${design}"
+				layout:fragment="header10"></h1>
+			<section th:if="${design}"
+				layout:fragment="content10"></section>
+			<div th:if="${design}" class="hr">&nbsp;</div>
+			<h1 th:if="${design}"
+				layout:fragment="header11"></h1>
+			<section th:if="${design}"
+				layout:fragment="content11"></section>
+			<div th:if="${design}" class="hr">&nbsp;</div>
+			<h1 th:if="${design}"
+				layout:fragment="header12"></h1>
+			<section th:if="${design}"
+				layout:fragment="content12"></section>
+		</main>
+
+		<footer>
+			<span>&copy; 2017 Jet Shop</span>
+			<span th:text="#{footer.info}"></span>
+		</footer>
+	</div>
+</body>
+</html>

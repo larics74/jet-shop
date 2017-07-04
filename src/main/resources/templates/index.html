@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="common/layout">
+<!-- 
+	Running from jar requires NO leading slash in "common/layout"!!!
+	IDE doesn't care.
+ -->
+
+<head>
+	<title th:text="#{title.jet.shop}">*Jet Shop</title> 
+</head>
+<body>
+	
+	<h1 layout:fragment="header" th:text="#{header.welcome}">*Header</h1>
+
+	<h1 layout:fragment="content">
+
+		<span class="ad">
+			<span th:text="#{ad.message.1}"
+				class="ad-p1">
+				*Fly
+			</span>
+			<span th:text="#{ad.message.2}"
+				class="ad-p2">
+				*to your dream
+			</span>
+			<span th:text="#{ad.message.3}"
+				class="ad-p3">
+				*faster
+			</span>
+			<span class="ad-p4">
+				<span th:text="#{ad.message.4}">*on our </span>
+				<span th:if="${latestJetModelId != null}">
+					<a th:href="@{/jetModels/{id}(id=${latestJetModelId})}">
+						<span th:text="${latestJetModelName}">*797</span>
+					</a>
+					&nbsp;
+					<span th:text="#{ad.jet}">*Jet</span>!
+				</span>
+				<span th:if="${latestJetModelId == null}">
+					<a th:href="@{/jetModels}">
+						<span th:text="#{ad.jets}">*Jets</span>
+					</a>!
+				</span>
+			</span>
+			<img th:src="@{/images/plane.png}" width="135" class="ad-p5" />
+		</span>
+
+	</h1>
+
+</body>
+</html>

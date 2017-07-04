@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="common/layout">
+<!-- 
+	Running from jar requires NO leading slash in "common/layout"!!!
+	IDE doesn't care.
+ -->
+
+<head> 
+	<title th:text="#{title.users}">*Users</title>
+</head>
+<body>
+
+	<h1 layout:fragment="header" th:text="#{title.users}">
+		*Users
+	</h1>
+
+	<section layout:fragment="content" class="data">
+
+		<table>
+			<thead>
+				<tr>
+					<th th:text="#{username}">*Username</th>
+					<th th:text="#{role}">*Role</th>
+					<td></td>
+					<td class="controls">
+						<a th:href="@{/users/create}" th:text="#{create}">
+							*Create
+						</a>
+					</td>
+					<td></td>
+				</tr>
+			</thead>
+
+			<tfoot>
+				<tr>
+					<th colspan="2"></th>
+				</tr>
+			</tfoot>
+
+			<tbody>
+				<tr th:each="user : ${users}">
+					<td th:text="${user.name}">*Delta</td>
+					<td th:text="${user.role}">*Customer</td>
+
+					<td class="controls">
+						<a th:href="@{/users/{id}(id=${user.id})}"
+							th:text="#{view}">
+							*View
+						</a>
+					</td>
+					<td class="controls">
+						<a th:href="@{/users/edit/{id}(id=${user.id})}"
+							th:text="#{edit}">
+							*Edit
+						</a>
+					</td>
+					<td class="controls caution">
+						<a th:href="@{/users/delete/{id}(id=${user.id})}"
+							th:text="#{delete}">
+							*Delete
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</section>
+
+</body>
+</html>

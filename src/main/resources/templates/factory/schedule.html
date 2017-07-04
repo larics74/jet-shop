@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="common/layout">
+<!-- 
+	Running from jar requires NO leading slash in "common/layout"!!!
+	IDE doesn't care.
+ -->
+
+<head>
+	<title th:text="#{title.factory}">*Factory Schedule</title> 
+</head>
+<body>
+
+	<h1 layout:fragment="header" th:text="#{title.factory}">
+		*Factory Schedule
+	</h1>
+
+	<section layout:fragment="content" class="data">
+		<table>
+			<thead>
+				<tr>
+					<th rowspan="2" th:text="#{lineNumber}"
+						class="very-long">
+						*Line Number
+					</th>
+					<th colspan="2" th:text="#{preparation}">*Preparation</th>
+					<th colspan="2" th:text="#{assembly}">*Assembly</th>
+					<th th:text="#{delivery}">*Delivery</th>
+				</tr>
+			</thead>
+
+			<tfoot>
+				<tr>
+					<th colspan="6"></th>
+				</tr>
+			</tfoot>
+
+			<tbody class="factory">
+				<tr>
+					<th></th>
+					<th th:text="#{date}">*Date</th>
+					<th th:text="#{duration}">*Duration</th>
+					<th th:text="#{date}">*Date</th>
+					<th th:text="#{duration}">*Duration</th>
+					<th th:text="#{date}">*Date</th>
+				</tr>
+				<tr>
+					<td>101</td>
+					<td>5/1/2018</td>
+					<td>10</td>
+					<td>5/11/2018</td>
+					<td>15</td>
+					<td>5/26/2018</td>
+					<td class="controls">
+						<a href="#" th:text="#{edit}">*Edit</a>
+					</td>
+					<td class="controls">
+						<a href="#" th:text="#{recalculate}">*Recalculate</a>
+					</td>
+				</tr>
+				<tr class="active">
+					<td>102</td>
+					<td><input type="date" value="2018-06-01" /></td>
+					<td><input type="text" value="10" /></td>
+					<td><input type="date" value="2018-06-11" /></td>
+					<td><input type="text" value="15" /></td>
+					<td><input type="date" value="2018-06-26" /></td>
+					<td class="controls">
+						<a href="#" th:text="#{save}">*Save</a>
+					</td>
+					<td class="controls"></td>
+				</tr>
+				<tr>
+					<td>103</td>
+					<td>7/1/2018</td>
+					<td>10</td>
+					<td>7/11/2018</td>
+					<td>15</td>
+					<td>7/26/2018</td>
+					<td class="controls">
+						<a href="#" th:text="#{edit}">*Edit</a>
+					</td>
+					<td class="controls">
+						<a href="#" th:text="#{recalculate}">*Recalculate</a>
+					</td>
+				</tr>
+				<tr>
+					<td>104</td>
+					<td>8/1/2018</td>
+					<td>10</td>
+					<td>8/11/2018</td>
+					<td>15</td>
+					<td>8/26/2018</td>
+					<td class="controls">
+						<a href="#" th:text="#{edit}">*Edit</a>
+					</td>
+					<td class="controls">
+						<a href="#" th:text="#{recalculate}">*Recalculate</a>
+					</td>
+				</tr>
+				<tr>
+					<td>105</td>
+					<td>9/1/2018</td>
+					<td>10</td>
+					<td>9/11/2018</td>
+					<td>15</td>
+					<td>9/26/2018</td>
+					<td class="controls">
+						<a href="#" th:text="#{edit}">*Edit</a>
+					</td>
+					<td class="controls">
+						<a href="#" th:text="#{recalculate}">*Recalculate</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="common/layout">
+<!-- 
+	Running from jar requires NO leading slash in "common/layout"!!!
+	IDE doesn't care.
+ -->
+
+<head>
+	<title th:text="#{title.log.in}">*Log in</title>
+</head>
+<body>
+
+	<h1 layout:fragment="header" th:text="#{title.log.in}">*Log in</h1>
+
+	<form layout:fragment="content"
+		th:action="@{/login}" method="post"
+		class="data">
+
+		<label for="username" th:text="#{username}">*Username</label>
+		<input type="text" name="username" id="username"
+			autofocus="autofocus" />
+
+		<label for="password" th:text="#{password}">*Password</label>
+		<input type="password" name="password" id="password" />
+
+		<section class="controls lower-controls">
+			<button type="submit" name="submit" th:text="#{log.in}">
+				*Log in
+			</button>
+		</section>
+
+	</form>
+
+</body>
+</html>

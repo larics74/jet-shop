@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="common/layout">
+<!-- 
+	Running from jar requires NO leading slash in "common/layout"!!!
+	IDE doesn't care.
+ -->
+
+<head> 
+	<title th:text="#{title.jetModel.details}">*Jet Model Details</title> 
+</head>
+<body>
+
+	<h1 layout:fragment="header" th:text="#{title.jetModel.details}">
+		*Jet Model Details
+	</h1>
+
+	<form layout:fragment="content"
+		th:action="@{/jetModels}" th:object="${jetModel}" method="post"
+		class="data-for-validation" 
+		enctype="multipart/form-data">
+
+		<div th:if="${#fields.hasAnyErrors()}" class="errors messages">
+			<div th:each="err:${#fields.allErrors()}" th:text="${err}"
+				class="error">
+			</div>
+		</div>
+
+		<input type="hidden" th:field="*{id}" />
+		<!-- 
+			There should be better approach, instead of
+			passing image through hidden field. 
+		-->
+		<input type="hidden" th:field="*{drawing}" />
+
+		<label for="name" th:text="#{name}">*Name</label>
+		<input type="text" th:field="*{name}" autofocus="autofocus" />
+		<div>
+			<span th:if="${#fields.hasErrors('name')}"
+				class="error">
+				*
+			</span>
+		</div>
+
+		<label for="description" th:text="#{description}">*Description</label>
+		<input type="text" th:field="*{description}" />
+		<div>
+			<span th:if="${#fields.hasErrors('description')}"
+				class="error">
+				*
+			</span>
+		</div>
+
+		<label th:text="#{drawing}">*Drawing</label>
+		<div>
+			<!-- Nothing to show if id==null (that is, new model) -->
+			<img th:unless="*{id == null}"
+				 th:src="@{'/jetModels/drawings/{id}'(id=${jetModel.id})}"
+				 width="200" />
+		</div>
+		<div></div>
+
+		<label th:text="#{upload}">*Upload</label>
+		<div>
+			<input type="file" name="file" />
+			<div th:if="${help}" th:text="#{help.file}"
+				class="help">
+				*Leave blank if you don't want to change it
+			</div>
+		</div>
+		<div>
+			<span th:if="${#fields.hasErrors('drawing')}"
+				class="error">
+				*
+			</span>
+		</div>
+
+		<section class="controls lower-controls">
+			<button type="submit" name="save" th:text="#{save}">Save</button>
+		</section>
+
+	</form>
+
+</body>
+</html>

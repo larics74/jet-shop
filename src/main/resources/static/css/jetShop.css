@@ -1,0 +1,347 @@
+/* Common variables and settings.
+*/
+:root {
+	font-family: Arial, Helvetica, sans-serif;
+
+	--border-size: 1px;
+
+	/* 
+		All colors.
+	*/
+
+	/* Home page ad */
+	--color-home: #449bb5;
+
+	/* Controls */
+	--color-control-border: white;
+	--color-control: white;
+	--back-control: #008CBA;
+	--back-control-hover: #00AEDC;
+	--back-caution-control: #E6353A;
+	--back-caution-control-hover: #F8575C;
+
+	/* Messages */
+	--color-error: red;
+	--back-error: #FFEBEE;
+	--color-info: #1E88E5; /* and footer */
+	--back-info: #E3F2FD; /* and footer */
+	--color-debug: black;
+	--back-debug: #EEEEEE;
+
+	/* Tables */
+	--color-th: black;
+	--back-th: #90CAF9;
+	--back-tr-even: #dbe5f0;
+	--back-factory-tr-even: white;
+	--back-factory-tr-odd: #dbe5f0;
+	--back-factory-tr-active: #FFF9C4;
+	--back-td-controls: white;
+
+	/* Design page delimiter */
+	--back-delimiter: teal;
+}
+
+html {
+	min-height: calc(100vh);
+}
+
+body {
+	margin: 0 8px;
+	min-height: calc(100vh);
+}
+
+body > div {
+	min-height: calc(100vh);
+	display: grid;
+	grid:
+		/* header main footer */
+		max-content 1fr max-content
+		/ auto;
+	grid-gap: 5px;
+}
+
+header {
+	display: grid;
+	grid: 
+		auto 
+		/* logo nav settings misc profile */
+		/ max-content auto repeat(3, max-content);
+	grid-gap: 5px;
+	align-items: start;
+}
+
+nav {
+	/* Using flex for horizontal menu
+		with undefined number of items.
+	*/
+	display: flex;
+}
+
+/* Controls: links and buttons */
+.controls a, .controls button {
+	display: block;
+	text-decoration: none;
+	margin: 0;
+	border: var(--border-size) solid var(--color-control-border);
+	padding: 4px 8px;
+	font-size: 0.8em;
+	text-align: center;
+	color: white;
+	background-color: var(--back-control);
+}
+
+.controls a:hover, .controls button:hover {
+	background-color: var(--back-control-hover);
+}
+
+.caution a, .caution button {
+	background-color: var(--back-caution-control);
+}
+
+.caution a:hover, .caution button:hover {
+	background-color: var(--back-caution-control-hover);
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+.menu-controls a, .menu-controls button {
+	padding: 14px 16px;
+	font-size: 1em;
+}
+
+.lower-controls a, .lower-controls button {
+	margin-right: 1em;
+}
+
+/* Centers button */
+td.controls button {
+	margin: auto;
+}
+
+#settings, #misc {
+	display: flex;
+}
+
+#profile {
+	display: grid;
+	grid:
+		auto
+		/ max-content;
+}
+
+#profile div:FIRST-CHILD {
+	/* This div contains the first row of profile
+		with only 2 of 4 visible components,
+		depending on whether the user logged in or not.
+	*/
+	display: flex;
+	justify-content: flex-end;
+}
+
+#profile p {
+	/* Welcome message, shown only for logged in user,
+		with link to profile.
+	*/
+	justify-self: center;
+}
+
+main {
+	display: grid;
+	grid-gap: 5px;
+	grid:
+		/* header(title) messages data(e.g., list/table,
+		 edit form or details view) 
+		*/
+		max-content max-content 1fr
+		/ auto;
+	align-items: start;
+}
+
+h1 {
+	padding: 0.3em 1em;
+}
+
+/* Home page ad */
+.ad {
+	color: var(--color-home);
+	display: grid;
+	justify-content: space-around;
+}
+.ad-p1 {
+	grid-column: 1 / 2;
+	grid-row: 5 / 6;
+}
+.ad-p2 {
+	grid-column: 2 / 3;
+	grid-row: 4 / 5;
+}
+.ad-p3 {
+	grid-column: 3 / 4;
+	grid-row: 3 / 4;
+}
+.ad-p4 {
+	grid-column: 4 / 5;
+	grid-row: 2 / 3;
+}
+.ad-p5 {
+	grid-column: 5 / 6;
+	grid-row: 1 / 2;
+	justify-self: start;
+}
+
+/* Error/info/debug messages */
+.messages div {
+	border: var(--border-size) solid white;
+	box-sizing: border-box;
+	padding: 0.3em 1em;
+}
+
+.error {
+	color: var(--color-error);
+	background-color: var(--back-error);
+}
+
+.info {
+	color: var(--color-info);
+	background-color: var(--back-info);
+}
+
+.debug {
+	color: var(--color-debug);
+	background-color: var(--back-debug);
+}
+
+.data {
+	display: grid;
+	/* Contains form (e.g., Log in) or details view
+		with unknown number of fields (rows),
+		components automatically put into 2 columns:
+		1) labels
+		2) input controls or data
+		The last row is for controls.
+	*/
+	grid: auto / repeat(2, max-content);
+	grid-gap: 10px;
+	justify-content: start;	
+	justify-self: start;
+	padding: 16px 8px 8px 8px;
+}
+
+.data-for-validation {
+	display: grid;
+	/* Contains form
+		with unknown number of fields (rows),
+		components automatically put into 3 columns:
+		1) labels
+		2) input controls or data
+		3) error marks
+		The last row is for controls.
+	*/
+	grid: auto / repeat(3, max-content);
+	grid-gap: 10px;
+	justify-content: start;	
+	justify-self: start;
+	padding: 16px 8px 8px 8px;
+}
+
+/* Validation error messages,
+	shown in the beginning of form.
+*/
+.errors {
+	/* Each error takes the whole row */
+	grid-column: 1 / span 3;
+	justify-content: start;
+}
+
+label {
+	justify-self: end;
+	font-weight: bold;
+}
+
+.help {
+	font-size: 0.7em;
+}
+
+input {
+	width: 100%;
+}
+
+/* Hack to make "save" button default upon pressing Enter
+	instead of "add" button which goes first
+	in the form "Jet Order Details".
+*/
+.default-button-handler {
+	width: 0;
+	height: 0;
+	padding: 0;
+	border: 0;
+	margin: 0;
+}
+
+.lower-controls {
+	/* Controls starts at the beginning
+		of the 2nd column.
+	*/
+	grid-column: 2 / span 1;
+	display: flex;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table th {
+	text-transform: uppercase;
+	font-size: 0.8em;
+	color: var(--color-th);
+	background-color: var(--back-th);
+}
+
+table, td, th {
+	padding: 4px 8px;
+}
+
+/* Wrapping long headers */
+th.very-long {
+	white-space: pre-line;
+}
+
+/* Making each second row having different color */
+tbody tr:nth-child(even) {
+	background-color: var(--back-tr-even);
+}
+
+/* Correcting row colors for Factory table
+	which header consists of 2 rows.
+*/
+tbody.factory tr:nth-child(even) {
+	background-color: var(--back-factory-tr-even);
+}
+
+tbody.factory tr:nth-child(odd) {
+	background-color: var(--back-factory-tr-odd);
+}
+
+tbody.factory tr.active {
+	background-color: var(--back-factory-tr-active);
+}
+
+/* Removing row background colors for controls */
+tbody td.controls {
+	background-color: var(--back-td-controls);
+}
+
+/* Design page delimiter */
+.hr {
+	background-color: var(--back-delimiter);
+}
+
+footer {
+	display: flex;
+	justify-content: space-between;
+	padding: 0.3em 1em;
+	color: var(--color-info);
+	background-color: var(--back-info);
+}

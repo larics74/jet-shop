@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="common/layout">
+<!-- 
+	Running from jar requires NO leading slash in "common/layout"!!!
+	IDE doesn't care.
+ -->
+
+<head>
+	<title>Design</title> 
+</head>
+<body>
+
+<!-- 
+	Notes:
+	Probably, all buttons and links should be cleared of actions on such page.
+ -->
+
+	<h1 layout:fragment="header" th:text="#{title.design}">
+		*JetShop Application Design
+	</h1>
+	<section layout:fragment="content"></section>
+
+	<h1 layout:fragment="header1" th:text="#{header.welcome}">*Header</h1>
+	<h1 layout:fragment="content1">
+
+		<span class="ad">
+			<span th:text="#{ad.message.1}"
+				class="ad-p1">
+				*Fly
+			</span>
+			<span th:text="#{ad.message.2}"
+				class="ad-p2">
+				*to your dream
+			</span>
+			<span th:text="#{ad.message.3}"
+				class="ad-p3">
+				*faster
+			</span>
+			<span class="ad-p4">
+				<span th:text="#{ad.message.4}">*on our </span>
+				<span th:if="${latestJetModelId != null}">
+					<a th:href="@{/jetModels/{id}(id=${latestJetModelId})}">
+						<span th:text="${latestJetModelName}">*797</span>
+					</a>
+					&nbsp;
+					<span th:text="#{ad.jet}">*Jet</span>!
+				</span>
+				<span th:if="${latestJetModelId == null}">
+					<a th:href="@{/jetModels}">
+						<span th:text="#{ad.jets}">*Jets</span>
+					</a>!
+				</span>
+			</span>
+			<img th:src="@{/images/plane.png}" width="135" class="ad-p5" />
+		</span>
+
+	</h1>
+
+	<h1 layout:fragment="header2" th:text="#{title.log.in}">*Log in</h1>
+
+	<form layout:fragment="content2"
+		th:action="@{/login}" method="post"
+		class="data" >
+
+		<label for="username" th:text="#{username}">*Username</label>
+		<input type="text" name="username" id="username"
+			/>
+<!--
+			autofocus="autofocus"
+ --> 
+
+		<label for="password" th:text="#{password}">*Password</label>
+		<input type="password" name="password" id="password" />
+
+		<section class="controls lower-controls">
+			<button type="submit" name="submit" th:text="#{log.in}">
+				*Log in
+			</button>
+		</section>
+
+<hr/>
+
+	</form>
+
+	<h1 layout:fragment="header3" th:text="#{title.user.details}">
+		*User Details
+	</h1>
+
+	<section layout:fragment="content3" class="data">
+
+		<label th:text="#{username}">*Username</label>
+		<span th:text="${user.name}">*Delta</span>
+
+		<label th:text="#{role}">*Role</label>
+		<span th:text="${user.role}">*Super role</span>
+
+		<section class="controls lower-controls">
+			<a th:href="@{/users/edit/{id}(id=${user.id})}" th:text="#{edit}">
+				*Edit
+			</a>
+		</section>
+
+	</section>
+
+	<h1 layout:fragment="header4" th:text="#{${headTitle}}">
+		*Register/Create/Edit User
+	</h1>
+
+	<form layout:fragment="content4"
+		th:action="@{${action}}" th:object="${user}" method="post"
+		class="data-for-validation">
+
+		<div th:if="${#fields.hasAnyErrors()}" class="errors messages">
+			<div th:each="err:${#fields.allErrors()}" th:text="${err}"
+				class="error">
+			</div>
+		</div>
+
+		<input type="hidden" th:field="*{id}" />
+		<input type="hidden" th:field="*{password}" />
+
+		<label for="name" th:text="#{username}">*Username</label>
+		<input type="text" th:field="*{name}" />
+<!-- 
+autofocus="autofocus" 
+ -->
+		<div>
+			<span th:if="${#fields.hasErrors('name')}"
+				class="error">
+				*
+			</span>
+		</div>
+
+		<label for="newPassword" th:text="#{password}">*Password</label>
+		<div>
+			<input type="password" th:field="*{newPassword}" />
+			<div th:if="${help}" th:text="#{help.password}"
+				class="help">
+				*Leave blank if you don't want to change it
+			</div>
+		</div>
+		<div>
+			<span th:if="${#fields.hasErrors('newPassword')}"
+				class="error">
+				*
+			</span>
+		</div>
+
+		<label for="passwordRepeated" th:text="#{passwordRepeated}">
+			*Repeat Password
+		</label>
+		<div>
+			<input type="password" th:field="*{passwordRepeated}" />
+			<div th:if="${help}" th:text="#{help.passwordRepeated}"
+				class="help">
+				*Leave blank if you don't want to change it
+			</div>
+		</div>
+		<div>
+			<span th:if="${#fields.hasErrors('passwordRepeated')}"
+				class="error">
+				*
+			</span>
+		</div>
+
+		<label for="role" th:text="#{role}">*Role</label>
+		<select th:field="*{role}">
+			<option th:each="role : ${roles}" th:value="${role}"
+				th:text="${role.name}">
+				*Super role
+			</option>
+		</select>
+		<div></div>
+
+		<section class="controls lower-controls">
+			<button type="submit" name="save" th:text="#{save}">*Save</button>
+		</section>
+
+	</form>
+
+	<h1 layout:fragment="header5" th:text="#{title.users}">
+		*Users
+	</h1>
+
+	<section layout:fragment="content5" class="data">
+
+		<table>
+			<thead>
+				<tr>
+					<th th:text="#{username}">*Username</th>
+					<th th:text="#{role}">*Role</th>
+					<td></td>
+					<td class="controls">
+						<a th:href="@{/users/create}" th:text="#{create}">
+							*Create
+						</a>
+					</td>
+					<td></td>
+				</tr>
+			</thead>
+
+			<tfoot>
+				<tr>
+					<th colspan="2"></th>
+				</tr>
+			</tfoot>
+
+			<tbody>
+				<tr th:each="user : ${users}">
+					<td th:text="${user.name}">*Delta</td>
+					<td th:text="${user.role}">*Customer</td>
+
+					<td class="controls">
+						<a th:href="@{/users/{id}(id=${user.id})}"
+							th:text="#{view}">
+							*View
+						</a>
+					</td>
+					<td class="controls">
+						<a th:href="@{/users/edit/{id}(id=${user.id})}"
+							th:text="#{edit}">
+							*Edit
+						</a>
+					</td>
+					<td class="controls caution">
+						<a th:href="@{/users/delete/{id}(id=${user.id})}"
+							th:text="#{delete}">
+							*Delete
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</section>
+
+	<h1 layout:fragment="header6" th:text="#{title.jetModel.details}">
+		*Jet Model Details
+	</h1>
+
+	<section layout:fragment="content6" class="data">
+
+		<label th:text="#{name}">*Name</label>
+		<span th:text="${jetModel.name}">*700</span>
+
+		<label th:text="#{description}">*Description</label>
+		<span th:text="${jetModel.description}">*700 description</span>
+
+		<label th:text="#{drawing}">*Drawing</label>
+		<img th:src="@{'/jetModels/drawings/{id}'(id=${jetModel.id})}"
+			width="200" />
+
+		<section class="controls lower-controls">
+			<a th:href="@{/jetModels/edit/{id}(id=${jetModel.id})}"
+				th:text="#{edit}">
+				*Edit
+			</a>
+			<a th:href="@{/jetOrders/create?jetModelId={id}(id=${jetModel.id})}"
+				th:text="#{order}">
+				*Order
+			</a>
+		</section>
+
+	</section>
+
+	<h1 layout:fragment="header7" th:text="#{title.jetModel.details}">
+		*Jet Model Details
+	</h1>
+
+	<form layout:fragment="content7"
+		th:action="@{/jetModels}" th:object="${jetModel}" method="post"
+		class="data-for-validation" 
+		enctype="multipart/form-data">
+
+		<div th:if="${#fields.hasAnyErrors()}" class="errors messages">
+			<div th:each="err:${#fields.allErrors()}" th:text="${err}"
+				class="error">
+			</div>
+		</div>
+
+		<input type="hidden" th:field="*{id}" />
+		<!-- 
+			There should be better approach, instead of
+			passing image through hidden field. 
+		-->
+		<input type="hidden" th:field="*{drawing}" />
+
+		<label for="name" th:text="#{name}">*Name</label>
+		<input type="text" th:field="*{name}" />
+<!-- 
+autofocus="autofocus" 
+ -->
+		<div>
+			<span th:if="${#fields.hasErrors('name')}"
+				class="error">
+				*
+			</span>
+		</div>
+
+		<label for="description" th:text="#{description}">*Description</label>
+		<input type="text" th:field="*{description}" />
+		<div>
+			<span th:if="${#fields.hasErrors('description')}"
+				class="error">
+				*
+			</span>
+		</div>
+
+		<label th:text="#{drawing}">*Drawing</label>
+		<div>
+			<!-- Nothing to show if id==null (that is, new model) -->
+			<img th:unless="*{id == null}"
+				 th:src="@{'/jetModels/drawings/{id}'(id=${jetModel.id})}"
+				 width="200" />
+		</div>
+		<div></div>
+
+		<label th:text="#{upload}">*Upload</label>
+		<div>
+			<input type="file" name="file" />
+			<div th:if="${help}" th:text="#{help.file}"
+				class="help">
+				*Leave blank if you don't want to change it
+			</div>
+		</div>
+		<div>
+			<span th:if="${#fields.hasErrors('drawing')}"
+				class="error">
+				*
+			</span>
+		</div>
+
+		<section class="controls lower-controls">
+			<button type="submit" name="save" th:text="#{save}">Save</button>
+		</section>
+
+	</form>
+
+	<h1 layout:fragment="header8" th:text="#{title.jetModels}">
+		*Jet Models
+	</h1>
+
+	<section layout:fragment="content8" class="data">
+
+		<table>
+			<thead>
+				<tr>
+					<th th:text="#{name}">*Name</th>
+					<th th:text="#{description}">*Description</th>
+					<td></td>
+					<td class="controls">
+						<a th:href="@{/jetModels/create}" th:text="#{create}">
+							*Create
+						</a>
+					</td>
+					<td></td>
+				</tr>
+			</thead>
+
+			<tfoot>
+				<tr>
+					<th colspan="2"></th>
+				</tr>
+			</tfoot>
+
+			<tbody>
+				<tr th:each="jetModel : ${jetModels}">
+					<td th:text="${jetModel.name}">*700</td>
+					<td th:text="${jetModel.description}">
+						*700 description
+					</td>
+
+					<td class="controls">
+						<a th:href="@{/jetModels/{id}(id=${jetModel.id})}"
+							th:text="#{view}">
+							*View
+						</a>
+					</td>
+					<td class="controls">
+						<a th:href="@{/jetModels/edit/{id}(id=${jetModel.id})}"
+							th:text="#{edit}">
+							*Edit
+						</a>
+					</td>
+					<td class="controls caution">
+						<a th:href=
+							"@{/jetModels/delete/{id}(id=${jetModel.id})}"
+							th:text="#{delete}">
+							*Delete
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</section>
+
+	<h1 layout:fragment="header9" th:text="#{title.jetOrder.details}">
+		*Jet Order Details
+	</h1>
+
+	<section layout:fragment="content9" class="data">
+			
+		<label for="lineNumber" th:text="#{lineNumber}">*Line Number</label>
+		<span th:text="${jetOrder.lineNumber}">*001</span>
+		
+		<label for="customer" th:text="#{customer}">*Customer</label>
+		<span th:text="${jetOrder.customer.name}">*Unknown Customer</span>
+					
+		<label for="jetModel" th:text="#{jetModel}">*Jet Model</label>
+		<span th:text="${jetOrder.jetModel.name}">Unknown Jet Model</span>
+
+		<label for="deliveryDate" th:text="#{deliveryDate}">
+			*Delivery Date
+		</label>
+		<span th:text="${#temporals
+			.format(jetOrder.deliveryDate, 'MM/dd/yyyy')}">
+			*1/1/2150
+		</span>
+
+		<label th:text="#{requirements}">*Requirements</label>
+		<table>
+			<thead>
+				<tr>
+					<th th:text="#{row}">Row</th>
+					<th th:text="#{description}">*Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="req,rowStat : ${jetOrder.requirements}">
+					<td th:text="${rowStat.count}">*1</td>
+					<td>
+						<span th:text="${jetOrder
+							.requirements[__${rowStat.index}__]
+							.description}">
+							*Requirement
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<section class="controls lower-controls">
+			<a th:href="@{/jetOrders/edit/{id}(id=${jetOrder.id})}"
+				th:text="#{edit}">
+				*Edit
+			</a>
+		</section>
+
+	</section>
+
+	<h1 layout:fragment="header10" th:text="#{title.jetOrder.details}">
+		*Jet Order Details
+	</h1>
+
+	<form layout:fragment="content10"
+		th:action="@{/jetOrders}" th:object="${jetOrder}" method="post"
+		class="data-for-validation">
+
+		<div th:if="${#fields.hasAnyErrors()}" class="errors messages">
+			<div th:each="err:${#fields.allErrors()}" th:text="${err}"
+				class="error">
+			</div>
+		</div>
+
+		<input type="hidden" th:field="*{id}" />
+
+		<!-- Hack to make "save" button default upon pressing Enter
+				instead of "add.row" button which goes first in the form. -->
+		<button type="submit" name="save" hidden="true" tabindex="-1"
+			class="default-button-handler">
+		</button>
+
+		<label for="lineNumber" th:text="#{lineNumber}">*Line Number</label>
+		<input type="text" th:field="*{lineNumber}" />
+<!-- 
+autofocus="autofocus" 
+ -->
+		<div>
+			<span th:if="${#fields.hasErrors('lineNumber')}"
+				class="error">
+				*
+			</span>
+		</div>
+
+		<label for="customer" th:text="#{customer}">*Customer</label>
+		<select th:field="*{customer}">
+			<option th:each="customer : ${customers}" th:value="${customer.id}"
+				th:text="${customer.name}">
+				*Unknown Customer
+			</option>
+		</select>
+		<div></div>
+					
+		<label for="jetModel" th:text="#{jetModel}">*Jet Model</label>
+		<select th:field="*{jetModel}">
+			<option th:each="jetModel : ${jetModels}" th:value="${jetModel.id}"
+				th:text="${jetModel.name}">
+				*797
+			</option>
+		</select>
+		<div></div>
+
+		<label for="deliveryDate" th:text="#{deliveryDate}">
+			*Delivery Date
+		</label>
+		<input type="date" th:field="*{deliveryDate}" />
+		<div>
+			<span th:if="${#fields.hasErrors('deliveryDate')}"
+				class="error">
+				*
+			</span>
+		</div>
+
+		<label th:text="#{requirements}">*Requirements</label>
+		<table>
+			<thead>
+				<tr>
+					<th th:text="#{row}">*N</th>
+					<th th:text="#{description}">*Description</th>
+					<td class="controls">
+						<button type="submit" name="add" th:text="#{add}">
+							*Add
+						</button>
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+
+<tr th:each="req,rowStat : *{requirements}">
+<td>
+	<label th:for="requirements__${rowStat.index}__.description"
+		th:text="${rowStat.count}">
+		*1
+	</label>
+</td>
+<td>
+	<input type="hidden" th:field="*{requirements[__${rowStat.index}__].id}" />
+
+	<input type="text"
+		th:field="*{requirements[__${rowStat.index}__].description}" />
+	<span th:if="${#fields
+		.hasErrors('requirements[__${rowStat.index}__].description')}" 
+		class="error">
+		*
+	</span>
+</td>
+<td class="controls caution">
+	<button type="submit" name="remove"
+		th:value="${rowStat.index}" th:text="#{remove}">
+		*Remove
+	</button>
+</td>
+</tr>
+
+			</tbody>
+		</table>
+
+		<section class="controls lower-controls">
+			<button type="submit" name="save" th:text="#{save}">Save</button>
+		</section>			
+
+	</form>
+
+	<h1 layout:fragment="header11" th:text="#{title.jetOrders}">
+		*Jet Orders
+	</h1>
+
+	<section layout:fragment="content11" class="data">
+
+		<table>
+			<thead>
+				<tr>
+					<th th:text="#{lineNumber}">*Line Number</th>
+					<th th:text="#{customer}">*Customer</th>
+					<th th:text="#{jetModel}">*Jet Model</th>
+					<th th:text="#{deliveryDate}">*Delivery Date</th>
+					<td></td>
+					<td class="controls">
+						<a th:href="@{/jetOrders/create}" th:text="#{create}">
+							*Create
+						</a>
+					</td>
+					<td></td>
+				</tr>
+			</thead>
+
+			<tfoot>
+				<tr>
+					<th colspan="4"></th>
+				</tr>
+			</tfoot>
+
+			<tbody>
+
+<tr th:each="jetOrder : ${jetOrders}">
+	<td th:text="${jetOrder.lineNumber}">*001</td>
+	<td>
+		<a th:href="@{/users/{id}(id=${jetOrder.customer.id})}">
+			<span th:text="${jetOrder.customer.name}">*Unknown Customer</span>
+		</a>
+	</td>
+	<td>
+		<a th:href="@{/jetModels/{id}(id=${jetOrder.jetModel.id})}">
+			<span th:text="${jetOrder.jetModel.name}">*797</span>
+		</a>
+	</td>
+	<td th:text="${#temporals.format(jetOrder.deliveryDate, 'MM/dd/yyyy')}">
+		*1/1/2150
+	</td>
+
+	<td class="controls">
+		<a th:href="@{/jetOrders/{id}(id=${jetOrder.id})}"
+			th:text="#{view}">
+			*View
+		</a>
+	</td>
+	<td class="controls">
+		<a th:href="@{/jetOrders/edit/{id}(id=${jetOrder.id})}"
+			th:text="#{edit}">
+			*Edit
+		</a>
+	</td>
+	<td class="controls caution">
+		<a th:href="@{/jetOrders/delete/{id}(id=${jetOrder.id})}"
+			th:text="#{delete}">
+			*Delete
+		</a>
+	</td>
+</tr>
+
+			</tbody>
+		</table>
+	</section>
+
+	<h1 layout:fragment="header12" th:text="#{title.factory}">
+		*Factory Schedule
+	</h1>
+	<section layout:fragment="content12" class="data">
+		<table>
+			<thead>
+				<tr>
+					<th rowspan="2" th:text="#{lineNumber}"
+						class="very-long">
+						*Line Number
+					</th>
+					<th colspan="2" th:text="#{preparation}">*Preparation</th>
+					<th colspan="2" th:text="#{assembly}">*Assembly</th>
+					<th th:text="#{delivery}">*Delivery</th>
+				</tr>
+			</thead>
+
+			<tfoot>
+				<tr>
+					<th colspan="6"></th>
+				</tr>
+			</tfoot>
+
+			<tbody class="factory">
+				<tr>
+					<th></th>
+					<th th:text="#{date}">*Date</th>
+					<th th:text="#{duration}">*Duration</th>
+					<th th:text="#{date}">*Date</th>
+					<th th:text="#{duration}">*Duration</th>
+					<th th:text="#{date}">*Date</th>
+				</tr>
+				<tr>
+					<td>101</td>
+					<td>5/1/2018</td>
+					<td>10</td>
+					<td>5/11/2018</td>
+					<td>15</td>
+					<td>5/26/2018</td>
+					<td class="controls">
+						<a href="#" th:text="#{edit}">*Edit</a>
+					</td>
+					<td class="controls">
+						<a href="#" th:text="#{recalculate}">*Recalculate</a>
+					</td>
+				</tr>
+				<tr class="active">
+					<td>102</td>
+					<td><input type="date" value="2018-06-01" /></td>
+					<td><input type="text" value="10" /></td>
+					<td><input type="date" value="2017-06-11" /></td>
+					<td><input type="text" value="15" /></td>
+					<td><input type="date" value="2017-06-26" /></td>
+					<td class="controls">
+						<a href="#" th:text="#{save}">*Save</a>
+					</td>
+					<td class="controls"></td>
+				</tr>
+				<tr>
+					<td>103</td>
+					<td>7/1/2018</td>
+					<td>10</td>
+					<td>7/11/2018</td>
+					<td>15</td>
+					<td>7/26/2018</td>
+					<td class="controls">
+						<a href="#" th:text="#{edit}">*Edit</a>
+					</td>
+					<td class="controls">
+						<a href="#" th:text="#{recalculate}">*Recalculate</a>
+					</td>
+				</tr>
+				<tr>
+					<td>104</td>
+					<td>8/1/2018</td>
+					<td>10</td>
+					<td>8/11/2018</td>
+					<td>15</td>
+					<td>8/26/2018</td>
+					<td class="controls">
+						<a href="#" th:text="#{edit}">*Edit</a>
+					</td>
+					<td class="controls">
+						<a href="#" th:text="#{recalculate}">*Recalculate</a>
+					</td>
+				</tr>
+				<tr>
+					<td>105</td>
+					<td>9/1/2018</td>
+					<td>10</td>
+					<td>9/11/2018</td>
+					<td>15</td>
+					<td>9/26/2018</td>
+					<td class="controls">
+						<a href="#" th:text="#{edit}">*Edit</a>
+					</td>
+					<td class="controls">
+						<a href="#" th:text="#{recalculate}">*Recalculate</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+
+</body>
+</html>

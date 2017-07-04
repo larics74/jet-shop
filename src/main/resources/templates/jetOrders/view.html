@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="common/layout">
+<!-- 
+	Running from jar requires NO leading slash in "common/layout"!!!
+	IDE doesn't care.
+ -->
+
+<head> 
+	<title th:text="#{title.jetOrder.details}">*Jet Order Details</title> 
+</head>
+<body>
+
+	<h1 layout:fragment="header" th:text="#{title.jetOrder.details}">
+		*Jet Order Details
+	</h1>
+
+	<section layout:fragment="content" class="data">
+			
+		<label for="lineNumber" th:text="#{lineNumber}">*Line Number</label>
+		<span th:text="${jetOrder.lineNumber}">*001</span>
+		
+		<label for="customer" th:text="#{customer}">*Customer</label>
+		<span th:text="${jetOrder.customer.name}">*Unknown Customer</span>
+					
+		<label for="jetModel" th:text="#{jetModel}">*Jet Model</label>
+		<span th:text="${jetOrder.jetModel.name}">Unknown Jet Model</span>
+
+		<label for="deliveryDate" th:text="#{deliveryDate}">
+			*Delivery Date
+		</label>
+		<span th:text="${#temporals
+			.format(jetOrder.deliveryDate, 'MM/dd/yyyy')}">
+			*1/1/2150
+		</span>
+
+		<label th:text="#{requirements}">*Requirements</label>
+		<table>
+			<thead>
+				<tr>
+					<th th:text="#{row}">Row</th>
+					<th th:text="#{description}">*Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="req,rowStat : ${jetOrder.requirements}">
+					<td th:text="${rowStat.count}">*1</td>
+					<td>
+						<span th:text="${jetOrder
+							.requirements[__${rowStat.index}__]
+							.description}">
+							*Requirement
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<section class="controls lower-controls">
+			<a th:href="@{/jetOrders/edit/{id}(id=${jetOrder.id})}"
+				th:text="#{edit}">
+				*Edit
+			</a>
+		</section>
+
+	</section>
+
+</body>
+</html>

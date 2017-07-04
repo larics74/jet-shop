@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="common/layout">
+<!-- 
+	Running from jar requires NO leading slash in "common/layout"!!!
+	IDE doesn't care.
+ -->
+
+<head> 
+	<title th:text="#{title.jetModels}">*Jet Models</title>
+</head>
+<body>
+
+	<h1 layout:fragment="header" th:text="#{title.jetModels}">
+		*Jet Models
+	</h1>
+
+	<section layout:fragment="content" class="data">
+
+		<table>
+			<thead>
+				<tr>
+					<th th:text="#{name}">*Name</th>
+					<th th:text="#{description}">*Description</th>
+					<td></td>
+					<td class="controls">
+						<a th:href="@{/jetModels/create}" th:text="#{create}">
+							*Create
+						</a>
+					</td>
+					<td></td>
+				</tr>
+			</thead>
+
+			<tfoot>
+				<tr>
+					<th colspan="2"></th>
+				</tr>
+			</tfoot>
+
+			<tbody>
+				<tr th:each="jetModel : ${jetModels}">
+					<td th:text="${jetModel.name}">*700</td>
+					<td th:text="${jetModel.description}">
+						*700 description
+					</td>
+
+					<td class="controls">
+						<a th:href="@{/jetModels/{id}(id=${jetModel.id})}"
+							th:text="#{view}">
+							*View
+						</a>
+					</td>
+					<td class="controls">
+						<a th:href="@{/jetModels/edit/{id}(id=${jetModel.id})}"
+							th:text="#{edit}">
+							*Edit
+						</a>
+					</td>
+					<td class="controls caution">
+						<a th:href=
+							"@{/jetModels/delete/{id}(id=${jetModel.id})}"
+							th:text="#{delete}">
+							*Delete
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</section>
+
+</body>
+</html>
