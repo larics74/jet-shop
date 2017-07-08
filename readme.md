@@ -8,10 +8,11 @@ As a jar file (you can download it from the release tab above):
 
 `java -jar jetshop-0.1.0.jar`
 
-
-Using Maven:
+or using Maven:
 
 `mvn spring-boot:run`
+
+Then access http://localhost:8080
 
 ## Features
 
