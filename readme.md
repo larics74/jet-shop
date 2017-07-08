@@ -2,7 +2,7 @@
 
 The main purpose was to learn some Spring/Spring Boot features (MVC, Spring Data, Security, AOP etc.). UI is created with Thymeleaf (no JavaScript, pure CSS). In-memory database H2 is used for data storage.
 
-Note: The app was tested only for Chrome browser. Some UI components (e.g. data) are not supported by Firefox.
+Note: The app was tested only for Chrome browser. Some UI components (e.g. date) are not supported by Firefox.
 
 ## Running the app
 
